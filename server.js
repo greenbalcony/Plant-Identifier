@@ -7,7 +7,7 @@ const path = require("path");
 
 const app = express();
 
-// Allow CORS temporarily for all domains for testing
+// Temporarily allow all origins for testing
 app.use(cors());
 
 app.use(express.json());
@@ -20,10 +20,8 @@ app.use(express.static(path.join(__dirname)));
 
 // Handle the API requests to identify plants
 app.post("/identify", upload.single("image"), (req, res) => {
-  // Fetch API key from environment variables
   const apiKey = process.env.PLANTNET_API_KEY;
 
-  // Log the API key to check if it's being read correctly
   console.log("API Key:", apiKey);
 
   if (!apiKey) {
@@ -36,12 +34,18 @@ app.post("/identify", upload.single("image"), (req, res) => {
 
   const formData = new FormData();
   formData.append("organs", req.body.organ || "auto");
-  formData.append("images", req.file.buffer, {
-    filename: req.file.originalname,
-    contentType: req.file.mimetype,
-  });
 
-  // Logging the request being made
+  if (req.file) {
+    formData.append("images", req.file.buffer, {
+      filename: req.file.originalname,
+      contentType: req.file.mimetype,
+    });
+  } else {
+    console.error("No image file found in request.");
+    res.status(400).json({ error: "No image file found." });
+    return;
+  }
+
   console.log("Sending request to Pl@ntNet API...");
 
   fetch(apiUrl, {
@@ -50,23 +54,23 @@ app.post("/identify", upload.single("image"), (req, res) => {
     body: formData,
   })
     .then((response) => {
-      // Check if the response is OK
+      console.log("Pl@ntNet API response status:", response.status);
+
       if (!response.ok) {
         console.error("Failed to fetch from Pl@ntNet API:", response.statusText);
         throw new Error(`Error from Pl@ntNet API: ${response.statusText}`);
       }
 
-      console.log("Received response from Pl@ntNet API:", response.status);
       return response.json();
     })
     .then((data) => {
-      console.log("Data from Pl@ntNet API:", data); // Log the data from the API
+      console.log("Received data from Pl@ntNet API:", data);
       res.json(data);
     })
     .catch(async (error) => {
       console.error("Error during API request:", error.message || error);
+
       if (error.response) {
-        console.error("Error status:", error.response.status);
         const errorBody = await error.response.text();
         console.error("Error response body:", errorBody);
         res.status(error.response.status).json({ error: errorBody });
