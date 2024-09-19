@@ -54,7 +54,12 @@ app.post("/identify", upload.single("image"), (req, res) => {
     body: formData,
   })
     .then((response) => {
-      // Log the response status and body
+      // Check if the response is OK
+      if (!response.ok) {
+        console.error("Failed to fetch from Pl@ntNet API:", response.statusText);
+        throw new Error(`Error from Pl@ntNet API: ${response.statusText}`);
+      }
+
       console.log("Received response from Pl@ntNet API:", response.status);
       return response.json();
     })
