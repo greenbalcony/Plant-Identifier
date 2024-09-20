@@ -40,7 +40,7 @@ app.post("/identify", upload.single("image"), async (req, res) => {
     return res.status(500).json({ error: "API Key is missing!" });
   }
 
-  const apiUrl = `https://my-api.plantnet.org/v2/identify/all?include-related-images=true&no-reject=false&nb-results=10&lang=en&api-key=${apiKey}`;
+  const apiUrl = `https://my-api.plantnet.org/v2/identify/all?include-related-images=true&no-reject=false&lang=en&api-key=${apiKey}`;
 
   const formData = new FormData();
   formData.append("organs", req.body.organ || "auto");
@@ -58,7 +58,6 @@ app.post("/identify", upload.single("image"), async (req, res) => {
   try {
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: formData.getHeaders(),
       body: formData,
     });
 
