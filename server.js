@@ -27,7 +27,14 @@ const upload = multer();
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Removed the middleware setting Content-Security-Policy
+// **Removed** Content Security Policy Middleware
+// app.use((req, res, next) => {
+//   res.setHeader(
+//     "Content-Security-Policy",
+//     "frame-ancestors 'self' https://www.greenbalcony.com"
+//   );
+//   next();
+// });
 
 // Root route handler
 app.get("/", (req, res) => {

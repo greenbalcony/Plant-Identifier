@@ -27,6 +27,10 @@
         {
           "key": "Content-Security-Policy",
           "value": "frame-ancestors 'self' https://www.greenbalcony.com"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "ALLOW-FROM https://www.greenbalcony.com"
         }
       ]
     }
