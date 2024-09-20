@@ -49,4 +49,49 @@ function identifyPlant(imageFile) {
   });
 }
 
-// ... rest of the functions (displayResults, showLoading, hideLoading) remain the same
+function displayResults(data) {
+  const resultDiv = document.getElementById('result');
+  resultDiv.innerHTML = '';
+  if (data.results && data.results.length > 0) {
+    let resultsFound = false;
+    data.results.forEach((plant) => {
+      const species = plant.species;
+      const scientificName = species.scientificName;
+      const commonNames = species.commonNames ? species.commonNames.join(', ') : 'N/A';
+      const score = (plant.score * 100).toFixed(2);
+      if (score >= 10) {
+        resultsFound = true;
+        const plantInfo = document.createElement('div');
+        plantInfo.innerHTML = `
+          <h3>${scientificName}</h3>
+          <p><strong>Common Names:</strong> ${commonNames}</p>
+          <p><strong>Confidence:</strong> ${score}%</p>
+        `;
+        if (plant.images && plant.images.length > 0) {
+          plant.images.forEach((img) => {
+            const imgElement = document.createElement('img');
+            imgElement.src = img.url.s;
+            imgElement.alt = `${scientificName} - ${img.organ}`;
+            plantInfo.appendChild(imgElement);
+          });
+        }
+        resultDiv.appendChild(plantInfo);
+      }
+    });
+    if (!resultsFound) {
+      resultDiv.innerHTML = 'No plants with a confidence score above 10% were found.';
+    }
+  } else {
+    resultDiv.innerHTML = 'No matching plants found.';
+  }
+}
+
+function showLoading() {
+  const loadingDiv = document.getElementById('loading');
+  loadingDiv.style.display = 'block';
+}
+
+function hideLoading() {
+  const loadingDiv = document.getElementById('loading');
+  loadingDiv.style.display = 'none';
+}

@@ -10,7 +10,7 @@ const app = express();
 // Allow CORS from your Vercel domain and your website
 app.use(cors({
   origin: [
-    "https://plant-identifier-msls2uh2b-brunos-projects-e594ffb4.vercel.app",
+    "https://plant-identifier-niqckz1cx-brunos-projects-e594ffb4.vercel.app",
     "https://www.greenbalcony.com"
   ],
   methods: "GET, POST",
@@ -23,8 +23,13 @@ app.use(express.json());
 // Set up Multer for file uploads
 const upload = multer();
 
-// Serve static files from the current directory (for serving index.html)
-app.use(express.static(path.join(__dirname)));
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Root route handler
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Handle the API requests to identify plants
 app.post("/identify", upload.single("image"), async (req, res) => {

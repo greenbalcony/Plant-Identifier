@@ -1,0 +1,59 @@
+body {
+  background: linear-gradient(120deg, #152232, #5ebc67);
+  background-size: 200% 200%;
+  animation: gradientMove 30s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+#result img {
+  max-width: 100px;
+  margin: 5px;
+  display: inline-block;
+}
+
+#plant-form button:disabled {
+  cursor: not-allowed;
+}
+
+.form-container {
+  padding: 10px;
+  margin: 0;
+}
+
+input,
+button {
+  margin: 5px 0;
+  padding: 10px;
+}
+
+#plant-form {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+#loading,
+#result {
+  min-height: 50px;
+}
+
+.allow-access-container {
+  margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .allow-access-container {
+    margin-top: 20px;
+  }
+}
