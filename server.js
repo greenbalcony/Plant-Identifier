@@ -11,7 +11,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://plant-identifier-hdigg3z4b-brunos-projects-e594ffb4.vercel.app", // Replace with your exact Vercel domain
+      "https://plant-identifier-48rgshsyx-brunos-projects-e594ffb4.vercel.app", // Replace with your correct Vercel domain
       "https://www.greenbalcony.com"
     ],
     methods: "GET, POST",
