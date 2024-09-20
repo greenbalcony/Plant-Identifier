@@ -23,7 +23,7 @@ document.getElementById('plant-form').addEventListener('submit', function(event)
 });
 
 function identifyPlant(imageFile) {
-  const apiUrl = 'https://plant-identifier-app-private-glxv.vercel.app/identify'; // Updated for Vercel
+  const apiUrl = 'https://plant-identifier-hdigg3z4b-brunos-projects-e594ffb4.vercel.app/identify'; // Updated for Vercel
 
   const formData = new FormData();
   formData.append('organ', 'auto');
