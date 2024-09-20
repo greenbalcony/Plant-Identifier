@@ -7,10 +7,10 @@ const path = require("path");
 
 const app = express();
 
-// Allow CORS only from your domain (https://www.greenbalcony.com)
+// Allow CORS only from your website and Vercel
 app.use(
   cors({
-    origin: "https://www.greenbalcony.com", // Allow requests only from your website
+    origin: ["https://www.greenbalcony.com", "https://plant-identifier-msls2uh2b-brunos-projects-e594ffb4.vercel.app"], // Allow requests only from your website and Vercel
     methods: "GET, POST",
     allowedHeaders: "Content-Type",
   })
@@ -28,10 +28,7 @@ app.use(express.static(path.join(__dirname)));
 app.post("/identify", upload.single("image"), (req, res) => {
   const apiKey = process.env.PLANTNET_API_KEY;
 
-  console.log("API Key:", apiKey);
-
   if (!apiKey) {
-    console.error("API Key is missing!");
     res.status(500).json({ error: "API Key is missing!" });
     return;
   }
@@ -47,12 +44,9 @@ app.post("/identify", upload.single("image"), (req, res) => {
       contentType: req.file.mimetype,
     });
   } else {
-    console.error("No image file found in request.");
     res.status(400).json({ error: "No image file found." });
     return;
   }
-
-  console.log("Sending request to Pl@ntNet API...");
 
   fetch(apiUrl, {
     method: "POST",
@@ -60,30 +54,13 @@ app.post("/identify", upload.single("image"), (req, res) => {
     body: formData,
   })
     .then((response) => {
-      console.log("Pl@ntNet API response status:", response.status);
-
       if (!response.ok) {
-        console.error("Failed to fetch from Pl@ntNet API:", response.statusText);
         throw new Error(`Error from Pl@ntNet API: ${response.statusText}`);
       }
-
       return response.json();
     })
-    .then((data) => {
-      console.log("Received data from Pl@ntNet API:", data);
-      res.json(data);
-    })
-    .catch(async (error) => {
-      console.error("Error during API request:", error.message || error);
-
-      if (error.response) {
-        const errorBody = await error.response.text();
-        console.error("Error response body:", errorBody);
-        res.status(error.response.status).json({ error: errorBody });
-      } else {
-        res.status(500).json({ error: error.toString() });
-      }
-    });
+    .then((data) => res.json(data))
+    .catch((error) => res.status(500).json({ error: error.toString() }));
 });
 
 // Set headers to allow embedding in iframe on your domain
