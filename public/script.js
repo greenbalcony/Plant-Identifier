@@ -67,18 +67,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (score >= 10) {
           resultsFound = true;
           const plantInfo = document.createElement('div');
+          plantInfo.classList.add('text-left', 'bg-gray-800', 'p-4', 'mb-4', 'rounded-lg');
           plantInfo.innerHTML = `
-            <h3>${scientificName}</h3>
+            <h3 class="text-xl font-semibold mb-2">${scientificName}</h3>
             <p><strong>Common Names:</strong> ${commonNames}</p>
             <p><strong>Confidence:</strong> ${score}%</p>
           `;
           if (plant.images && plant.images.length > 0) {
+            const imagesContainer = document.createElement('div');
+            imagesContainer.classList.add('flex', 'flex-wrap', 'mt-2');
             plant.images.forEach((img) => {
               const imgElement = document.createElement('img');
               imgElement.src = img.url.s;
               imgElement.alt = `${scientificName} - ${img.organ}`;
-              plantInfo.appendChild(imgElement);
+              imgElement.classList.add('w-24', 'h-24', 'object-cover', 'm-1', 'rounded');
+              imagesContainer.appendChild(imgElement);
             });
+            plantInfo.appendChild(imagesContainer);
           }
           resultDiv.appendChild(plantInfo);
         }

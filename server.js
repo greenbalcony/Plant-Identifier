@@ -6,11 +6,10 @@ const fetch = require("node-fetch");
 const path = require("path");
 const app = express();
 
-// Allow CORS from your Vercel domain and your website
+// Allow CORS from your Vercel domain
 app.use(cors({
   origin: [
-    "https://plant-identifier-niqckz1cx-brunos-projects-e594ffb4.vercel.app", // Replace with your actual Vercel URL
-    "https://www.greenbalcony.com"
+    "https://your-vercel-app-url.vercel.app", // Replace with your actual Vercel URL
   ],
   methods: "GET, POST",
   allowedHeaders: "Content-Type",
@@ -68,13 +67,6 @@ app.post("/identify", upload.single("image"), async (req, res) => {
     console.error("Error during API request:", error.message || error);
     res.status(500).json({ error: error.toString() });
   }
-});
-
-// Set headers to allow embedding in iframe on your domain
-app.use((req, res, next) => {
-  res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.greenbalcony.com");
-  res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://www.greenbalcony.com");
-  next();
 });
 
 // Listen on the appropriate port

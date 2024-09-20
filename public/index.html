@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Plant Identifier</title>
+  <!-- Include Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Link to your custom styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="min-h-screen flex flex-col justify-center items-center text-white font-sans">
-  <div class="allow-access-container mb-2">
+<body class="min-h-screen flex flex-col items-center text-white font-sans">
+  <div class="allow-access-container mb-4 mt-8">
     <label class="flex items-center space-x-2">
       <input type="checkbox" id="allow-access" class="form-checkbox h-5 w-5 text-green-500">
       <span>I allow access to camera/files</span>
     </label>
   </div>
-  <form id="plant-form" class="bg-gray-900 rounded-lg shadow-lg space-y-2 form-container">
-    <div>
-      <label for="plant-image" class="block text-sm font-medium">Upload or Take a Photo of the Plant:</label>
-      <input type="file" id="plant-image" name="plant-image" accept="image/*" disabled required class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none">
+  <form id="plant-form" class="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
+    <div class="mb-4">
+      <label for="plant-image" class="block text-sm font-medium mb-2">Upload or Take a Photo of the Plant:</label>
+      <input type="file" id="plant-image" name="plant-image" accept="image/*" disabled required class="block w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 cursor-pointer focus:outline-none">
     </div>
     <select id="organs" name="organs" class="hidden">
       <option value="auto" selected>Auto Detect</option>
@@ -26,37 +28,38 @@
       Identify Plant
     </button>
   </form>
-  <div id="loading" class="mt-2 text-lg" style="display: none">
+  <div id="loading" class="mt-4 text-lg" style="display: none;">
     Identifying the plant, please wait...
   </div>
-  <div id="result" class="mt-2 w-full max-w-lg text-center"></div>
+  <div id="result" class="mt-4 w-full max-w-lg text-center"></div>
   <!-- Information Cards Section -->
-  <section class="card-section mt-8">
-    <h2 class="text-center text-2xl font-bold mb-8">How to Use the Plant Identifier</h2>
-    <div class="card-container">
-      <div class="card">
-        <div class="card-icon">📷</div>
-        <div class="card-title">Upload a Photo</div>
-        <div class="card-description">
+  <section class="card-section mt-12">
+    <h2 class="text-center text-3xl font-bold mb-8">How to Use the Plant Identifier</h2>
+    <div class="card-container flex flex-wrap justify-center gap-8 px-4">
+      <div class="card bg-gray-800 rounded-lg p-6 w-64 text-center shadow-lg">
+        <div class="card-icon text-4xl mb-4">📷</div>
+        <div class="card-title text-xl font-semibold mb-2">Upload a Photo</div>
+        <div class="card-description text-sm">
           Take or upload a clear image of the plant, leaf, flower, or bark you want to identify.
         </div>
       </div>
-      <div class="card">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">Identify</div>
-        <div class="card-description">
+      <div class="card bg-gray-800 rounded-lg p-6 w-64 text-center shadow-lg">
+        <div class="card-icon text-4xl mb-4">🔍</div>
+        <div class="card-title text-xl font-semibold mb-2">Identify</div>
+        <div class="card-description text-sm">
           Click "Identify Plant" to analyze the image and get accurate information about the species.
         </div>
       </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <div class="card-title">Get Results</div>
-        <div class="card-description">
+      <div class="card bg-gray-800 rounded-lg p-6 w-64 text-center shadow-lg">
+        <div class="card-icon text-4xl mb-4">📊</div>
+        <div class="card-title text-xl font-semibold mb-2">Get Results</div>
+        <div class="card-description text-sm">
           View detailed species information, including scientific names, common names, and identification confidence.
         </div>
       </div>
     </div>
   </section>
+  <!-- Include your custom script -->
   <script src="script.js"></script>
 </body>
 </html>
