@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 // Handle the API requests to identify plants
 app.post("/identify", upload.single("image"), async (req, res) => {
   const apiKey = process.env.PLANTNET_API_KEY;
-
   if (!apiKey) {
     console.error("API Key is missing!");
     return res.status(500).json({ error: "API Key is missing!" });

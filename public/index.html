@@ -14,28 +14,22 @@
       <span>I allow access to camera/files</span>
     </label>
   </div>
-
   <form id="plant-form" class="bg-gray-900 rounded-lg shadow-lg space-y-2 form-container">
     <div>
       <label for="plant-image" class="block text-sm font-medium">Upload or Take a Photo of the Plant:</label>
       <input type="file" id="plant-image" name="plant-image" accept="image/*" disabled required class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none">
     </div>
-
     <select id="organs" name="organs" class="hidden">
       <option value="auto" selected>Auto Detect</option>
     </select>
-
-    <button type="submit" disabled class="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 disabled:bg-gray-500">
+    <button type="submit" disabled class="w-full bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 disabled:bg-gray-500 transition-colors duration-300">
       Identify Plant
     </button>
   </form>
-
   <div id="loading" class="mt-2 text-lg" style="display: none">
     Identifying the plant, please wait...
   </div>
-
   <div id="result" class="mt-2 w-full max-w-lg text-center"></div>
-
   <!-- Information Cards Section -->
   <section class="card-section mt-8">
     <h2 class="text-center text-2xl font-bold mb-8">How to Use the Plant Identifier</h2>
@@ -63,7 +57,6 @@
       </div>
     </div>
   </section>
-
   <script src="/script.js"></script>
 </body>
 </html>

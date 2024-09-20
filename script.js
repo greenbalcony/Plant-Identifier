@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
     plantImageInput.disabled = !isChecked;
     submitButton.disabled = !isChecked;
     submitButton.style.cursor = isChecked ? 'pointer' : 'not-allowed';
+
+    if (isChecked) {
+      submitButton.classList.remove('bg-gray-500');
+      submitButton.classList.add('bg-green-500', 'hover:bg-green-600');
+    } else {
+      submitButton.classList.remove('bg-green-500', 'hover:bg-green-600');
+      submitButton.classList.add('bg-gray-500');
+    }
   });
 
   plantForm.addEventListener('submit', function(event) {
