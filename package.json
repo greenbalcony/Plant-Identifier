@@ -9,11 +9,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-    "dependencies": {
-      "cors": "^2.8.5",
-      "express": "^4.17.1",
-      "form-data": "^4.0.0",
-      "multer": "^1.4.3",
-      "node-fetch": "^2.6.1"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "form-data": "^4.0.0",
+    "multer": "^1.4.3",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.12"
   }
 }
