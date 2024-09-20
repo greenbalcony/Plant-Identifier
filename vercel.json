@@ -6,7 +6,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "public/**",
+      "src": "public/*",
       "use": "@vercel/static"
     }
   ],
@@ -17,10 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "public/$1"
+      "dest": "/public/$1"
     }
-  ],
-  "env": {
-    "PLANTNET_API_KEY": "@plantnet_api_key"
-  }
+  ]
 }

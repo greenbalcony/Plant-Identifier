@@ -4,7 +4,6 @@ const multer = require("multer");
 const FormData = require("form-data");
 const fetch = require("node-fetch");
 const path = require("path");
-
 const app = express();
 
 // Allow CORS from your Vercel domain and your website
@@ -40,7 +39,6 @@ app.post("/identify", upload.single("image"), async (req, res) => {
   }
 
   const apiUrl = `https://my-api.plantnet.org/v2/identify/all?include-related-images=true&no-reject=false&lang=en&api-key=${apiKey}`;
-
   const formData = new FormData();
   formData.append("organs", req.body.organ || "auto");
 
