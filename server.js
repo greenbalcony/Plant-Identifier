@@ -7,7 +7,7 @@ const path = require("path");
 
 const app = express();
 
-// Temporarily allow all origins for testing
+// Allow CORS from all origins for testing purposes
 app.use(cors());
 
 app.use(express.json());
