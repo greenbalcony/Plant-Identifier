@@ -7,8 +7,14 @@ const path = require("path");
 
 const app = express();
 
-// Temporarily allow all origins for testing
-app.use(cors());
+// Allow CORS only from your domain (https://www.greenbalcony.com)
+app.use(
+  cors({
+    origin: "https://www.greenbalcony.com", // Allow requests only from your website
+    methods: "GET, POST",
+    allowedHeaders: "Content-Type",
+  })
+);
 
 app.use(express.json());
 
