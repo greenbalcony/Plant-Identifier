@@ -6,17 +6,10 @@ const fetch = require("node-fetch");
 const path = require("path");
 const app = express();
 
-// Set headers to allow embedding in iframe on your domain
-app.use((req, res, next) => {
-  res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.greenbalcony.com");
-  res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://www.greenbalcony.com");
-  next();
-});
-
-// Allow CORS from your domains
+// Allow CORS from your Vercel domain and your website
 app.use(cors({
   origin: [
-    "https://your-app-url.vercel.app",
+    "https://plant-identifier-niqckz1cx-brunos-projects-e594ffb4.vercel.app", // Replace with your actual Vercel URL
     "https://www.greenbalcony.com"
   ],
   methods: "GET, POST",
@@ -77,7 +70,14 @@ app.post("/identify", upload.single("image"), async (req, res) => {
   }
 });
 
-// Start the server
+// Set headers to allow embedding in iframe on your domain
+app.use((req, res, next) => {
+  res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.greenbalcony.com");
+  res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://www.greenbalcony.com");
+  next();
+});
+
+// Listen on the appropriate port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
