@@ -8,16 +8,15 @@ const path = require("path");
 const app = express();
 
 // Allow CORS from your Vercel domain and your website
-app.use(
-  cors({
-    origin: [
-      "https://plant-identifier-48rgshsyx-brunos-projects-e594ffb4.vercel.app", // Replace with your correct Vercel domain
-      "https://www.greenbalcony.com"
-    ],
-    methods: "GET, POST",
-    allowedHeaders: "Content-Type",
-  })
-);
+app.use(cors({
+  origin: [
+    "https://plant-identifier-msls2uh2b-brunos-projects-e594ffb4.vercel.app",
+    "https://www.greenbalcony.com"
+  ],
+  methods: "GET, POST",
+  allowedHeaders: "Content-Type",
+  credentials: true
+}));
 
 app.use(express.json());
 
@@ -28,15 +27,12 @@ const upload = multer();
 app.use(express.static(path.join(__dirname)));
 
 // Handle the API requests to identify plants
-app.post("/identify", upload.single("image"), (req, res) => {
+app.post("/identify", upload.single("image"), async (req, res) => {
   const apiKey = process.env.PLANTNET_API_KEY;
-
-  console.log("API Key:", apiKey);
 
   if (!apiKey) {
     console.error("API Key is missing!");
-    res.status(500).json({ error: "API Key is missing!" });
-    return;
+    return res.status(500).json({ error: "API Key is missing!" });
   }
 
   const apiUrl = `https://my-api.plantnet.org/v2/identify/all?include-related-images=true&no-reject=false&nb-results=10&lang=en&api-key=${apiKey}`;
@@ -51,47 +47,32 @@ app.post("/identify", upload.single("image"), (req, res) => {
     });
   } else {
     console.error("No image file found in request.");
-    res.status(400).json({ error: "No image file found." });
-    return;
+    return res.status(400).json({ error: "No image file found." });
   }
 
-  console.log("Sending request to Pl@ntNet API...");
-
-  fetch(apiUrl, {
-    method: "POST",
-    headers: formData.getHeaders(),
-    body: formData,
-  })
-    .then((response) => {
-      console.log("Pl@ntNet API response status:", response.status);
-
-      if (!response.ok) {
-        console.error("Failed to fetch from Pl@ntNet API:", response.statusText);
-        throw new Error(`Error from Pl@ntNet API: ${response.statusText}`);
-      }
-
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Received data from Pl@ntNet API:", data);
-      res.json(data);
-    })
-    .catch(async (error) => {
-      console.error("Error during API request:", error.message || error);
-
-      if (error.response) {
-        const errorBody = await error.response.text();
-        console.error("Error response body:", errorBody);
-        res.status(error.response.status).json({ error: errorBody });
-      } else {
-        res.status(500).json({ error: error.toString() });
-      }
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: formData.getHeaders(),
+      body: formData,
     });
+
+    if (!response.ok) {
+      throw new Error(`Error from Pl@ntNet API: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Error during API request:", error.message || error);
+    res.status(500).json({ error: error.toString() });
+  }
 });
 
 // Set headers to allow embedding in iframe on your domain
 app.use((req, res, next) => {
   res.setHeader("X-Frame-Options", "ALLOW-FROM https://www.greenbalcony.com");
+  res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://www.greenbalcony.com");
   next();
 });
 
