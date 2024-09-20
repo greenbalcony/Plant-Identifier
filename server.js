@@ -27,14 +27,7 @@ const upload = multer();
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Set Content Security Policy to allow embedding
-app.use((req, res, next) => {
-  res.setHeader(
-    "Content-Security-Policy",
-    "frame-ancestors 'self' https://www.greenbalcony.com"
-  );
-  next();
-});
+// Removed the middleware setting Content-Security-Policy
 
 // Root route handler
 app.get("/", (req, res) => {
